@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 from tqdm import tqdm
-from PIL import Image
 from rays import Ray, Camera, Light
 from objects import Ball, Floor
 from util import normalize
@@ -24,7 +23,6 @@ def main():
     light = Light(direction=np.array([8,10,-15]), intensity=1.0)
 
     frame = np.empty(shape=[camera.resolution[1], camera.resolution[0], 3], dtype=np.uint8)
-    # pixels = camera.resolution[0]*camera.resolution[1]
 
     for y in tqdm(range(camera.resolution[1])):
         for x in range(camera.resolution[0]):
@@ -46,8 +44,6 @@ def main():
             frame[y,x] = color * 255
 
 
-
-    # Image.fromarray(frame).show()
     cv2.imshow("test frame",frame)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
