@@ -1,1 +1,1 @@
-Simple raytracing, built mainly to learn and apply linear algebra
+Simple raytracing script, built mainly to learn and apply linear algebra
