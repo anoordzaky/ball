@@ -14,7 +14,6 @@ def main():
     )
 
     objects = [
-        # Ball(np.array([-5,0,-8]),1, np.array([1,0,0])),
         Ball(np.array([0,0,-10]),2, np.array([0,1,0])),
         Ball(np.array([-5,0,-10]),2, np.array([.6,.2,.8])),
         Floor(2, np.array([0,0,0]), np.array([1,1,1]))
