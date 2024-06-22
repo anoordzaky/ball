@@ -3,7 +3,7 @@ import numpy as np
 from tqdm import tqdm
 from PIL import Image
 from rays import Ray, Camera, Light
-from objects import Ball, Floor
+from objects import Ball, Floor, Skybox
 from util import normalize
 
 def main():
@@ -13,6 +13,8 @@ def main():
         resolution=np.array([1280,720]),
         fov=90
     )
+
+    skybox = Skybox("skybox_3.jpg")
 
     objects = [
         # Ball(np.array([-5,0,-8]),1, np.array([1,0,0])),
@@ -41,7 +43,7 @@ def main():
                     color = color * .1 / light.intensity
                 color =  color * max(np.dot(normal, -light.direction * light.intensity),0)
             else:
-                color = np.array([0,0,0])
+                color = skybox.get_color(camera_ray.direction)
 
             frame[y,x] = color * 255
 

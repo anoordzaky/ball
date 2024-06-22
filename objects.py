@@ -1,4 +1,6 @@
 import numpy as np
+from math import atan2, asin, pi 
+from PIL import Image
 from util import normalize, rescale
 
 class Ball():
@@ -61,4 +63,20 @@ class Floor():
         if round(x) % 6 <= 2 and round(z) % 6 <= 2:
             return self.color1
         return self.color2
+
+class Skybox():
+    def __init__(self, path):
+        self.image = Image.open(path)
+        self.size = self.image.size
+        self.image_array = np.asarray(self.image)
+
+    def get_color(self,ray):
+        u = .5 + atan2(ray[2], ray[0])/(2*pi)
+        v = .5 + asin(ray[1])/pi
+
+        intersect_loc = [int(u * self.size[0]), int(v * self.size[1])]
+        color = self.image_array[intersect_loc[1], intersect_loc[0]]
+
+        return np.array([color[0], color[1], color[2]]) / 255
+
 
