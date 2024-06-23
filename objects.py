@@ -38,7 +38,7 @@ class Ball():
     
     def normal(self, ray):
         norm = ray - self.center
-        return rescale(normalize(norm))
+        return normalize(rescale(norm))
     
 class Floor():
     def __init__(self, y, color1, color2):
@@ -59,7 +59,6 @@ class Floor():
     
     def surface_color(self, ray):
         x, z = ray[0], ray[1]
-
         if round(x) % 6 <= 2 and round(z) % 6 <= 2:
             return self.color1
         return self.color2
