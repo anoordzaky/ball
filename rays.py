@@ -10,16 +10,10 @@ class Ray():
     def cast(self, objects):
         for object in objects:
             intersect = object.intersect(self)
-            
             if type(intersect) == np.ndarray:
-                # print(intersect)
-                # end_color = object.surface_color(intersect) * max([np.dot(object.normal(intersect), -light.direction * light.intensity),0])
-
                 return intersect, object
         
         return False, False
-    
-    # def reflect
             
 class Camera():
     def __init__(self, position, fov, resolution):

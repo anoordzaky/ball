@@ -35,7 +35,7 @@ class Ball():
             # print(type(ray.origin + t * ray.direction))
             return ray.origin + t*ray.direction
         return False
-    
+
     def normal(self, ray):
         norm = ray - self.center
         return normalize(rescale(norm))
@@ -58,10 +58,11 @@ class Floor():
         return ray.origin + t*ray.direction
     
     def surface_color(self, ray):
-        x, z = ray[0], ray[1]
-        if round(x) % 6 <= 2 and round(z) % 6 <= 2:
-            return self.color1
-        return self.color2
+        x, z = ray[0], ray[2]
+        if round(x) % 6 <= 2 and round(z) % 6 <= 2 or \
+           round(x) % 6 >= 3 and round(z) % 6 >= 3:
+            return self.color2
+        return self.color1
 
 class Skybox():
     def __init__(self, path):
