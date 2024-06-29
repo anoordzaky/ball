@@ -5,7 +5,7 @@ from rays import Ray, Camera, Light
 from objects import Ball, Floor, Skybox
 from util import normalize, reflect, clamp_color
 
-def raytrace(ray, objects, shadow_bias, light, skybox):
+def raytrace(ray, objects, light, skybox):
 
     intersect, object = ray.cast(objects=objects)
     normal = None
@@ -31,23 +31,21 @@ def raytrace(ray, objects, shadow_bias, light, skybox):
 
 def main():
 
-
-    shadow_bias = 0.0001
     max_reflect = 3
 
-    reflection_weight = .2
+    reflection_weight = .3
     camera = Camera(
         position=np.array([0,-2,0]),
-        resolution=np.array([1280,720]),
+        resolution=np.array([1920,1080]),
         fov=90
     )
 
     skybox = Skybox("lasilla_inv.jpg")
 
     objects = [
-        Ball(np.array([0,-1,-20]),2, np.array([1,0,0])),
-        Ball(np.array([5,-2,-10]),2, np.array([0,1,0])),
-        Ball(np.array([-5,-3,-10]),2, np.array([0,0,1])),
+        Ball(np.array([0,-1,-20]),2, np.array([0.4,.8,.2])),
+        Ball(np.array([5,-2,-10]),2, np.array([.1,.5,.9])),
+        Ball(np.array([-5,-3,-10]),2, np.array([.9,.1,.2])),
 
         Floor(2, np.array([0,0,0]), np.array([1,1,1]))
     ]
@@ -61,7 +59,7 @@ def main():
 
             camera_ray = camera.get_z(np.array([x,y]))
 
-            intersect, normal, color = raytrace(ray=camera_ray, objects=objects, shadow_bias=shadow_bias, light=light, skybox=skybox)
+            intersect, normal, color = raytrace(ray=camera_ray, objects=objects, light=light, skybox=skybox)
             direction = camera_ray.direction
 
             if type(intersect) == np.ndarray:
@@ -73,7 +71,7 @@ def main():
 
                 for ref in range(max_reflect):
 
-                    intersect, normal, curr_color = raytrace(reflection_ray, objects,shadow_bias,light,skybox)
+                    intersect, normal, curr_color = raytrace(reflection_ray, objects,light,skybox)
                     reflection_n +=1
                     reflection_color = reflection_color + curr_color
                     if type(intersect) == np.ndarray:
